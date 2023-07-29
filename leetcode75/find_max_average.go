@@ -3,6 +3,20 @@ package leetcode75
 import "math"
 
 func findMaxAverage(nums []int, k int) float64 {
+	maxAverage := 0
+	for i := 0; i < k; i++ {
+		maxAverage += nums[i]
+	}
+
+	windowSum := maxAverage
+	for i := k; i < len(nums); i++ {
+		windowSum += nums[i] - nums[i-k]
+		maxAverage = Max(maxAverage, windowSum)
+	}
+	return float64(maxAverage) / float64(k)
+}
+
+func findMaxAverageBruteForce(nums []int, k int) float64 {
 	var maxAverage float64 = math.Inf(-1)
 	for i := 0; i < len(nums)-k+1; i++ {
 		sum := 0
